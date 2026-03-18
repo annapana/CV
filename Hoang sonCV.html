@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nguyen Hoang Son - Senior Engineer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0f0f;
+    --paper: #f5f0e8;
+    --accent: #1a56c8;
+    --rule: #0f0f0f;
+    --muted: #5a5346;
+    --tag-bg: #e8e2d5;
+    /* Base scaling factor: 1.25 (125%) */
+    --scale: 1.2;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: calc(13px * var(--scale)); /* Scaled base font size */
+    line-height: 1.7;
+    min-height: 100vh;
+    padding: calc(48px * var(--scale)) calc(24px * var(--scale));
+  }
+
+  .page {
+    max-width: calc(900px * var(--scale)); /* Scaled page width */
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Header */
+  .masthead {
+    border-top: calc(3px * var(--scale)) solid var(--ink);
+    border-bottom: calc(1px * var(--scale)) solid var(--ink);
+    padding: calc(20px * var(--scale)) 0 calc(16px * var(--scale));
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .masthead-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: calc(10px * var(--scale));
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .masthead-contact {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: calc(11px * var(--scale));
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  /* Title block */
+  .title-block {
+    border-bottom: calc(1px * var(--scale)) solid var(--ink);
+    padding: calc(32px * var(--scale)) 0 calc(24px * var(--scale));
+    margin-bottom: calc(32px * var(--scale));
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: calc(clamp(36px, 6vw, 54px) * var(--scale));
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: calc(12px * var(--scale));
+    text-transform: uppercase;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+    text-transform: none;
+  }
+
+  .subtitle {
+    font-family: 'Syne', sans-serif;
+    font-size: calc(13px * var(--scale));
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Two-column Layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr calc(280px * var(--scale));
+    gap: calc(40px * var(--scale));
+    align-items: start;
+  }
+
+  /* Sticky Sidebar */
+  .sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: calc(24px * var(--scale));
+  }
+
+  /* Profile Picture */
+  .profile-pic {
+    width: 100%;
+    /* aspect-ratio: 1 / 1; Optional: for square picture */
+    margin-bottom: calc(16px * var(--scale));
+    border: calc(1px * var(--scale)) solid var(--ink); /* Optional border */
+    overflow: hidden; /* Ensures image stays within border if needed */
+  }
+
+  .profile-pic img {
+    width: 100%;
+    height: auto;
+    display: block; /* Removes any default inline spacing */
+  }
+
+  .section {
+    margin-bottom: calc(36px * var(--scale));
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: calc(9px * var(--scale));
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: calc(1px * var(--scale)) solid var(--ink);
+    padding-top: calc(8px * var(--scale));
+    margin-bottom: calc(12px * var(--scale));
+  }
+
+  /* Work Experience Styling */
+  .exp-item {
+    margin-bottom: calc(24px * var(--scale));
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    color: var(--ink);
+    font-size: calc(13px * var(--scale));
+  }
+
+  .exp-title {
+    color: var(--accent);
+    font-size: calc(14px * var(--scale));
+    margin-bottom: calc(4px * var(--scale));
+  }
+
+  .exp-list {
+    list-style: none;
+    margin-top: calc(8px * var(--scale));
+  }
+
+  .exp-list li {
+    position: relative;
+    padding-left: calc(20px * var(--scale));
+    margin-bottom: calc(6px * var(--scale));
+    font-size: calc(12px * var(--scale));
+  }
+
+  .exp-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: calc(12px * var(--scale));
+  }
+
+  /* Project Showcase Grid */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: calc(16px * var(--scale));
+    margin-top: calc(16px * var(--scale));
+  }
+
+  .gallery-item {
+    background: #e8e2d5;
+    border: calc(1px * var(--scale)) solid var(--ink);
+    padding: calc(12px * var(--scale));
+    text-align: center;
+  }
+
+  .gallery-placeholder {
+    background: #d8d0c0;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(32px * var(--scale));
+    margin-bottom: calc(8px * var(--scale));
+    filter: grayscale(0%);
+    transition: filter 0.3s;
+  }
+
+  .gallery-caption {
+    font-family: 'Syne', sans-serif;
+    font-size: calc(10px * var(--scale));
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* Sidebar Cards */
+  .sidebar-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: calc(24px * var(--scale));
+    margin-bottom: calc(16px * var(--scale));
+  }
+
+  .sidebar-card .card-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: calc(9px * var(--scale));
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #a09585;
+    margin-bottom: calc(10px * var(--scale));
+  }
+
+  .sidebar-card .skill-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: calc(24px * var(--scale));
+    line-height: 1.2;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(6px * var(--scale));
+    margin-top: calc(10px * var(--scale));
+  }
+
+  .tag {
+    background: var(--tag-bg);
+    border: calc(1px * var(--scale)) solid #c8c0b0;
+    padding: calc(4px * var(--scale)) calc(10px * var(--scale));
+    font-size: calc(10px * var(--scale));
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+
+  .tag.blue {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(1px * var(--scale));
+    background: var(--ink);
+    border: calc(1px * var(--scale)) solid var(--ink);
+    margin-bottom: calc(16px * var(--scale));
+  }
+
+  .kpi-cell {
+    background: var(--paper);
+    padding: calc(14px * var(--scale)) calc(16px * var(--scale));
+    text-align: center;
+  }
+
+  .kpi-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: calc(18px * var(--scale));
+    color: var(--ink);
+  }
+
+  .kpi-key {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: calc(8px * var(--scale));
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Footer */
+  .footer-strip {
+    margin-top: calc(20px * var(--scale));
+    border-top: calc(1px * var(--scale)) solid var(--ink);
+    padding-top: calc(10px * var(--scale));
+    font-size: calc(13px * var(--scale));
+  }
+  
+  .footer-strip span {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: calc(18px * var(--scale));
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+
+
+  /* Container for the image */
+.gallery-placeholder {
+    background: #d8d0c0;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* This crops any part of the image that is too large */
+    border-bottom: calc(1px * var(--scale)) solid var(--ink);
+    margin-bottom: calc(8px * var(--scale));
+}
+
+/* Specific sizing for the images inside the placeholder */
+.gallery-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This is the "magic" line: it fills the box without stretching */
+    filter: grayscale(0%);
+    transition: filter 0.3s ease-in-out;
+}
+
+/* Optional: remove grayscale when you hover over the whole item */
+.gallery-item:hover img {
+    filter: grayscale(100%);
+}
+
+
+/* The Lightbox Overlay */
+#lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The Zoomed Image */
+#lightbox img {
+    max-width: 90%;
+    max-height: 80%;
+    border: calc(2px * var(--scale)) solid var(--paper);
+    box-shadow: 0 0 calc(20px * var(--scale)) rgba(0,0,0,0.5);
+}
+
+/* Close instruction */
+#lightbox::after {
+    content: "Click anywhere to close";
+    position: absolute;
+    bottom: calc(40px * var(--scale));
+    color: var(--paper);
+    font-family: 'Syne', sans-serif;
+    text-transform: uppercase;
+    font-size: calc(10px * var(--scale));
+    letter-spacing: 0.2em;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <span class="masthead-label">Mechanical Design Portfolio</span>
+    <span class="masthead-contact">+84 969 575 386 · wedpolice95@gmail.com</span>
+  </div>
+
+  <div class="title-block">
+    <h1>Nguyen Hoang <em>Son</em></h1>
+    <p class="subtitle">Senior Engineer · Manufacturing Project Manager · CSWE</p>
+  </div>
+
+  <div class="two-col">
+    <div class="main-col">
+
+      <div class="section">
+        <div class="section-label">Work Experience</div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span>MDC PRECISION</span>
+            <span>Apr 2023 - Present</span>
+          </div>
+          <div class="exp-title">Manufacturing Project Manager</div>
+          <ul class="exp-list">
+            <li>Producing instructions and ensuring clear information for production.</li>
+            <li>Leading NPI assembly of vacuum and gas line systems.</li>
+            <li>Collaborating with supplier engineers from LAM and AMAT to submit SPS and PR.</li>
+            <li>Managing urgent POs to ensure fast part fabrication.</li>
+            <li>On-site troubleshooting and designing new parts for US customers.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span>AREVO LABS - UNITED STATES</span>
+            <span>Apr 2021 - Dec 2023</span>
+          </div>
+          <div class="exp-title">Vietnam Product Engineer Manager</div>
+          <ul class="exp-list">
+            <li>Executing Engineering Change Requests from the US to VN.</li>
+            <li>Coordinating and transferring new products to Vietnam.</li>
+            <li>Visiting and meeting with customers to develop products.</li>
+            <li>Solving volume manufacturing issues and leading PEs in 3D printing adaptation.</li>
+            <li>Quickly designing demos and providing feedback for potential new B2B products.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span>AA CORPORATION - ORIENTO BRAND</span>
+            <span>Jun 2020 - Apr 2021</span>
+          </div>
+          <div class="exp-title">CAD Engineer & Manufacturing Management</div>
+          <ul class="exp-list">
+            <li>Built 3D models for interior projects and created renderings using SOLIDWORKS and KeyShot.</li>
+            <li>Visited vendors to manage production processes and lead times.</li>
+            <li>Prepared supporting documents for proposals and client presentations.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span>SOLID & SOFT</span>
+            <span>Sep 2018 - Jun 2020</span>
+          </div>
+          <div class="exp-title">Application Engineering Lead</div>
+          <ul class="exp-list">
+            <li>Finding new customers through research, visits, and presentations.</li>
+            <li>Conducting regular customer visits to understand needs and build relationships.</li>
+            <li>Providing technical training and after-sales support.</li>
+            <li>Leading a group of 3-5 application engineers.</li>
+          </ul>
+        </div>
+<!-- 
+        <div class="exp-item">
+          <div class="exp-header">
+            <span>RUN4-PYT-TRAINER</span>
+            <span>May 2017 - Aug 2018</span>
+          </div>
+          <div class="exp-title">Projects Manager</div>
+          <ul class="exp-list">
+            <li>Working in the R&D Department of Bionic Runner bike.</li>
+            <li>Checking strength and selecting materials for products.</li>
+            <li>Contacting and negotiating with factories for production.</li>
+            <li>Assembling, testing, and troubleshooting products.</li>
+            <li>Designing manufacturing drawings for hydraulic drive machinery.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span>LUCASSEN PRECISION</span>
+            <span>Aug 2016 - Jul 2017</span>
+          </div>
+          <div class="exp-title">CNC Programming Engineer</div>
+          <ul class="exp-list">
+            <li>Controlling and programming CNC machines using Heidenhain language.</li>
+            <li>Designing and manufacturing fixture parts.</li>
+            <li>Performing Quality Control on machined part tolerances.</li>
+          </ul>
+        </div> -->
+
+
+      </div>
+
+      <div class="section">
+        <div class="section-label">Education</div>
+        <p><strong>Industrial University (IUH)</strong></p>
+        <p>Bachelor of Engineering in Mechanical Engineering</p>
+        <p>Machine Design and Manufacturing (2013-2017)</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Project Showcase & Visuals</div>
+        <div class="gallery-grid">
+
+            <a >
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                <img src="AUTOMATION SYS.jpg" alt="AUTOMATION SYS.jpg">
+                </div>
+               
+            <div class="gallery-caption">AUTOMATION SYS</div>
+            </div>
+            </a> 
+
+
+
+
+            <a >
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                <img src="Chair01.jpg" alt="chair01">
+                </div>
+               
+            <div class="gallery-caption">CHAIR COLLECTION</div>
+            </div>
+            </a> 
+
+
+
+
+            <a href="https://vuhoanganh.vn/product/dzieu" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                <img src="DZIEU.jpg" alt="DZIEU.jpg">
+                </div>
+               
+            <div class="gallery-caption">DZIEU COLECTION</div>
+            </div>
+            </a> 
+
+
+            <a>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                <img src="LOUNGE CHAIR.jpg" alt="LOUNGE CHAIR">
+                </div>
+               
+            <div class="gallery-caption">LOUNGE CHAIR</div>
+            </div>
+            </a> 
+
+
+            <a>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                <img src="MOON CHAIR.jpg" alt="MOON CHAIR">
+                </div>
+               
+            <div class="gallery-caption">MOON CHAIR</div>
+            </div>
+            </a> 
+
+            <a href="https://vuhoanganh.vn/product/propella-easy" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                <img src="PROPELLA.jpg" alt="PROPELLA">
+                </div>
+               
+            <div class="gallery-caption">PROPELLA</div>
+            </div>
+            </a> 
+
+            <a href="https://www.youtube.com/watch?v=y6W9hRdb32M" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                <img src="annimation.jpg" alt="annimation">
+                </div>
+               
+            <div class="gallery-caption">ANNIMATION VIDEO MAKER</div>
+            </div>
+            </a> 
+
+            <a href="https://www.youtube.com/watch?v=x0wq6jDp0qE" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                <img src="Automation machine concept.jpg" alt="Automation machine concept.jpg">
+                </div>
+               
+            <div class="gallery-caption">AUTOMATION MACHINE CONCEPT</div>
+            </div>
+            </a> 
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sidebar">
+      <div class="profile-pic">
+        <img src="HoangSon.jpg" alt="Nguyen Hoang Son">
+      </div>
+
+      <div class="sidebar-card">
+        <div class="card-label">Top Skill</div>
+        <div class="skill-val">SOLIDWORKS Expert</div>
+        <p style="font-size: calc(11px * var(--scale)); margin-top:calc(5px * var(--scale)); color: #a09585;">Certified in Sheetmetal, Additive Manufacturing & Advanced Drawing.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Software</div>
+        <div class="tag-list">
+          <span class="tag blue">SOLIDWORKS</span>
+          <span class="tag blue">FUSION360</span>
+          <span class="tag">BLENDER</span>
+          <span class="tag blue">KeyShot</span>
+          <span class="tag">AutoCAD</span>
+          <span class="tag">Inventor</span>
+          <span class="tag">CATIA</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Achievements</div>
+        <div class="kpi-row">
+          <div class="kpi-cell">
+            <span class="kpi-val">2nd</span>
+            <span class="kpi-key">Skill Contest HCMC</span>
+          </div>
+          <div class="kpi-cell">
+            <span class="kpi-val">CES 2021</span>
+            <span class="kpi-key">Attendee</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-card" style="background: var(--accent);">
+        <div class="card-label" style="color: #fff;">Contact</div>
+        <div class="skill-val" style="font-size: calc(18px * var(--scale));">Ho Chi Minh City</div>
+        <p style="color: #eee;">Born: 03 Oct 1995</p>
+        <p style="color: #eee;">Phone: +84 969.575.386</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <p>Nguyen Hoang Son · Machine Builder & Senior Engineer</p>
+    <span>Built with Precision.</span>
+  </div>
+
+</div>
+
+<div id="lightbox" onclick="this.style.display='none'">
+    <img src="" alt="Full View">
+</div>
+
+</body>
+
+<script>
+    document.querySelectorAll('.gallery-placeholder img').forEach(image => {
+        image.onclick = (e) => {
+            e.stopPropagation();
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = lightbox.querySelector('img');
+            lightboxImg.src = image.src;
+            lightbox.style.display = 'flex';
+        };
+    });
+</script>
+</html>
